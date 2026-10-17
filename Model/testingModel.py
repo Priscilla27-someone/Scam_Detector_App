@@ -20,10 +20,10 @@ prediction = model.predict(text_vectorized)[0]
 
 # Display the result
 if prediction == 0:
-    print("\nResult: Ham (likely legitimate)")
+    print("\nResult: This is mostly a legimate message! No need to worry. (Ham)")
 elif prediction == 1:
-    print("\nResult: Smishing (possible phishing scam)")
+    print("\nResult: They are probably trying to steal your information! (Smishing, possible phishing scam)")
 elif prediction == 2:
-    print("\nResult: Spam (unwanted or suspicious message)")
+    print("\nResult: They are probably trying the scam you!!! (Spam, possible spam)")
 else:
     print("\nUnknown category:", prediction)
