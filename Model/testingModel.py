@@ -13,17 +13,27 @@ with open("Model/tf_vectorizer2.pkl", "rb") as file:
 text = input("Paste the email or message you want to check:\n")
 
 # Convert the text into numerical features
+# Note: Im using the Random Forest model. It's still under the same file name.
 text_vectorized = tf.transform([text])
 
-# Predict the category
+# Predict the category and confidence level
 prediction = model.predict(text_vectorized)[0]
+confidences= model.predict_proba(text_vectorized)[0] #Not every model type can use predict_proba
+
+#Confidence precentage
+predicted_index = list(model.classes_).index(prediction)
+confidence = confidences[predicted_index] * 100
 
 # Display the result
 if prediction == 0:
-    print("\nResult: This is mostly a legimate message! No need to worry. (Ham)")
+    print(f"\nResult: This is mostly a legimate message! No need to worry. I am {confidence:.2f}%" , "confident")
+    
 elif prediction == 1:
-    print("\nResult: They are probably trying to steal your information! (Smishing, possible phishing scam)")
+    print("\nResult: They are probably trying to steal your information! (Smishing, possible phishing scam) I am {confidence:.2f}%" , "confident")
 elif prediction == 2:
-    print("\nResult: They are probably trying the scam you!!! (Spam, possible spam)")
+    print("\nResult: They are probably trying the scam you!!! (Spam, possible spam) I am {confidence:.2f}%" , "confident")
 else:
     print("\nUnknown category:", prediction)
+
+print(f"\nConfidence: {confidence:.4f}%")
+
